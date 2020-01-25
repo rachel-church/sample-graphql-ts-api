@@ -1,6 +1,6 @@
 {
   "overwrite": true,
-  "schema": "src/**/*.gql",
+  "schema": "src/**/*.graphql",
   "documents": null,
   "generates": {
     "src/introspection-result.ts": {
@@ -16,14 +16,14 @@
         {
           "add": "// THIS IS A GENERATED FILE. Do not edit manually."
         },
-        "typescript"
+        "typescript",
+        "typescript-resolvers"
       ],
       "config": {
-        "defaultMapper": "unknown",
         "enumsAsTypes": true,
         "noSchemaStitching": true,
         "optional": false,
-        "avoidOptionals": true,
+        "avoidOptionals": false,
         "immutableTypes": true
       }
     }
