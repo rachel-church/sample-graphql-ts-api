@@ -1,0 +1,10 @@
+.env*
+dist
+package-lock.json
+node_modules
+.idea
+.vscode
+*.log
+
+src/introspection-result.ts
+src/schema.d.ts

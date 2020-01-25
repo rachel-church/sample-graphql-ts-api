@@ -1,0 +1,31 @@
+{
+  "overwrite": true,
+  "schema": "src/**/*.gql",
+  "documents": null,
+  "generates": {
+    "src/introspection-result.ts": {
+      "plugins": [
+        {
+          "add": "// THIS IS A GENERATED FILE. Do not edit manually."
+        },
+        "fragment-matcher"
+      ]
+    },
+    "src/schema.d.ts": {
+      "plugins": [
+        {
+          "add": "// THIS IS A GENERATED FILE. Do not edit manually."
+        },
+        "typescript"
+      ],
+      "config": {
+        "defaultMapper": "unknown",
+        "enumsAsTypes": true,
+        "noSchemaStitching": true,
+        "optional": false,
+        "avoidOptionals": true,
+        "immutableTypes": true
+      }
+    }
+  }
+}

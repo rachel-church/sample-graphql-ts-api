@@ -1,0 +1,19 @@
+{
+  "name": "my-graphql-project",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "gen": "gql-gen --config ./codegen.json"
+  },
+  "dependencies": {
+    "graphql": "^14.5.8",
+    "graphql-yoga": "1.18.3"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "^1.11.2",
+    "@graphql-codegen/cli": "^1.11.2",
+    "@graphql-codegen/fragment-matcher": "^1.11.2",
+    "@graphql-codegen/typescript": "^1.11.2",
+    "ts-node": "7.0.1",
+    "typescript": "3.2.2"
+  }
+}
