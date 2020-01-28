@@ -1,6 +1,6 @@
 {
   "overwrite": true,
-  "schema": "src/**/*.graphql",
+  "schema": "src/schema.graphql",
   "documents": null,
   "generates": {
     "src/introspection-result.ts": {

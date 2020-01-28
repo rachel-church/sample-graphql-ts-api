@@ -1,4 +1,5 @@
 import { importSchema } from 'graphql-import';
+import { filterNumerics } from './filter';
 const { ApolloServer } = require('apollo-server');
 import { Resolvers } from 'src/schema';
 import { mockDB } from './mockDB';
@@ -12,27 +13,42 @@ const resolvers: Resolvers<typeof context> = {
     employee: (_, { id }, { dataLoader }) => {
       return dataLoader.getEmployee(id) || null;
     },
-    employees: (_, args, { dataLoader }) => {
-      return dataLoader.getEmployees();
+    employees: (_, { where, skip, limit }, { dataLoader }) => {
+      const { age, id } = where || {};
+
+      let employees = dataLoader.getEmployees();
+      if (age) {
+        employees = employees.filter(e => filterNumerics(e.age, age));
+      }
+      if (id) {
+        employees = employees.filter(e => e.id === id);
+      }
+      if (limit) {
+        employees.slice(limit + (skip || 0), limit)
+      }
+
+      return employees;
     }
   },
   Mutation: {
-    createEmployee: (_, { firstName, lastName, age, managerId, departmentId, }, { dataLoader }) => {
+    createEmployee: (_, { fields }, { dataLoader }) => {
+      const { firstName, lastName, age, managerId } = fields;
       return dataLoader.createEmployee({
-        firstName,
-        lastName,
+        firstName: firstName || '',
+        lastName: lastName || '',
         age,
-        manager: (managerId && dataLoader.getEmployee(managerId)) || undefined,
-        department: (departmentId && dataLoader.getDepartment(departmentId)) || undefined,
+        manager: (managerId && dataLoader.getEmployee(managerId)) || undefined
       });
+    },
+    updateEmployee: (_, { id, fields }, { dataLoader }) => {
+      return dataLoader.updateEmployee(id, fields);
     }
   },
   Employee: {
-    department(employee, args, { dataLoader }) {
-      return (employee.department && employee.department.id && dataLoader.getDepartment(employee.department.id)) || null;
+    manager(employee, args, { dataLoader }) {
+      return (employee.manager && employee.manager.id && dataLoader.getEmployee(employee.manager.id)) || null;
     },
   },
-  Department: {}
 };
 
 async function main() {

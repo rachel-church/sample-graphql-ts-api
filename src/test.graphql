@@ -1,0 +1,22 @@
+query GetAllEmployees {
+    employees {
+        id,
+        firstName
+    }
+}
+
+mutation CreateMe {
+    createEmployee(firstName: "Rachel", lastName: "Church", age: 25) {
+        id
+    }
+}
+
+query GetEmployeesUnder30 {
+    employees(where: { age: { lessThanOrEqualTo: 30 } }) {
+        results {
+            id,
+            firstName,
+            age
+        }
+    }
+}
