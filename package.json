@@ -1,8 +1,9 @@
 {
-  "name": "my-graphql-project",
+  "name": "sample-graphql-ts-api",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "gen": "gql-gen --config ./codegen.json"
+    "gen": "gql-gen --config ./codegen.json",
+    "postinstall": "yarn gen"
   },
   "dependencies": {
     "apollo-server": "^2.9.16",

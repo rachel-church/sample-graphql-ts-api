@@ -4,6 +4,10 @@ const { ApolloServer } = require('apollo-server');
 import { Resolvers } from 'src/schema';
 import { mockDB } from './mockDB';
 
+/**
+ * The context is an object which is provided to every resolver and holds important contextual information like the
+ * currently logged in user, or access to a database.
+ */
 const context = {
   dataLoader: mockDB
 };
@@ -48,7 +52,11 @@ const resolvers: Resolvers<typeof context> = {
     manager(employee, args, { dataLoader }) {
       return (employee.manager && employee.manager.id && dataLoader.getEmployee(employee.manager.id)) || null;
     },
-  },
+    // Note that the other fields are trivial so we do not need to explicitly define them.
+    // But they would look something like:
+    //  firstName(employee) { return employee.firstName }
+    // See https://graphql.org/learn/execution/#trivial-resolvers
+  }
 };
 
 async function main() {
